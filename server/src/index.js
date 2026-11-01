@@ -183,7 +183,7 @@ const app = express();
 const allowedOrigins = CORS_ORIGIN.split(',').map(o => o.trim());
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       logger.warn('CORS rejection', { origin, allowed: allowedOrigins });
@@ -191,7 +191,8 @@ const corsOptions = {
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   maxAge: 3600
 };
 app.use(cors(corsOptions));

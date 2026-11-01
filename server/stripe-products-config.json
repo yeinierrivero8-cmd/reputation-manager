@@ -1,0 +1,37 @@
+{
+  "timestamp": "2026-10-17T04:13:12.242Z",
+  "environment": "test",
+  "products": [
+    {
+      "id": "plan_starter",
+      "name": "ReputationManager Starter",
+      "businessLimit": 1,
+      "prices": {
+        "monthly": "price_1UROzbFqqTLELbGJPTgO531d",
+        "yearly": "price_1UROzbFqqTLELbGJnWAUYxr1"
+      },
+      "status": "created"
+    },
+    {
+      "id": "plan_professional",
+      "name": "ReputationManager Professional",
+      "businessLimit": 3,
+      "prices": {
+        "monthly": "price_1UROzbFqqTLELbGJePC9K9AW",
+        "yearly": "price_1UROzbFqqTLELbGJfTZVkycJ"
+      },
+      "status": "created"
+    },
+    {
+      "id": "plan_business",
+      "name": "ReputationManager Business",
+      "businessLimit": 10,
+      "prices": {
+        "monthly": "price_1UROzcFqqTLELbGJdFh7sexd",
+        "yearly": "price_1UROzcFqqTLELbGJlhwT04Fh"
+      },
+      "status": "created"
+    }
+  ],
+  "warnings": []
+}

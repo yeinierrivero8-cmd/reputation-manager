@@ -1,0 +1,185 @@
+{
+  "users": [
+    {
+      "id": "rO7_TL-69KjIXn",
+      "name": "Yainier Gomez Rivero",
+      "email": "yeinierrivero8@gmail.com",
+      "passwordHash": "$2a$12$3KcJzY.BRpnCVQ4KbtOaR.IdpXgR4fbllSYQEY.Yxttvx.wcDp72.",
+      "createdAt": "2026-10-12T02:34:12.163Z"
+    },
+    {
+      "id": "hZ4xTKRZkixM5w",
+      "name": "Test User Phase1",
+      "email": "test.phase1@example.com",
+      "passwordHash": "$2a$12$JOdKczF.w1jOZiIc5X395OWNXDivR/0jNLbw3dAqbvK7AaP8ex0ja",
+      "createdAt": "2026-10-12T02:56:48.679Z"
+    },
+    {
+      "id": "aCCSUl6gE_jLP2",
+      "name": "User A Security",
+      "email": "usera.sec@test.com",
+      "passwordHash": "$2a$12$fex56LUYBqBxlNu95GbGL.5e4IP9G7m4HjHt/UpFLgUpxEbb60lTi",
+      "createdAt": "2026-10-12T03:06:38.477Z"
+    },
+    {
+      "id": "xsb376VE9G-bmQ",
+      "name": "User B Security",
+      "email": "userb.sec@test.com",
+      "passwordHash": "$2a$12$1vnTwgzpISAaejz0zK/GiOtca2b9WbmDWtzkCrVWHIkUaMRBe/D4O",
+      "createdAt": "2026-10-12T03:06:38.772Z"
+    },
+    {
+      "id": "E8MZqhuvsRwYvZ",
+      "name": "Security Test",
+      "email": "sectest@test.com",
+      "passwordHash": "$2a$12$CmwOaq.dx1g3cWj2woUj2.Ct/Z2jZt7XjV.coMdccAXFUJSla44..",
+      "createdAt": "2026-10-12T03:10:52.816Z"
+    },
+    {
+      "id": "2k-TNLd0vkpvtB",
+      "name": "Widget Test User",
+      "email": "widget.test@test.com",
+      "passwordHash": "$2a$12$x0cd2BMhiExeWCrk0PI4mOV0GntYTzKWktF0v793jMbe3Xz4hC6R.",
+      "createdAt": "2026-10-12T03:16:04.336Z"
+    }
+  ],
+  "businesses": [
+    {
+      "id": "we-DHrcGeTOeDU",
+      "userId": "rO7_TL-69KjIXn",
+      "name": "Auto Repair",
+      "type": "Taller mecánico",
+      "description": "Trabajo de excelencia y precios asequibles",
+      "shareLink": "IIDqUP8K73",
+      "createdAt": "2026-10-12T02:43:08.308Z"
+    },
+    {
+      "id": "BRu7vDszkMZU4N",
+      "userId": "hZ4xTKRZkixM5w",
+      "name": "Test Restaurant Phase1",
+      "type": "Restaurante",
+      "description": "Local de prueba para validar cach�",
+      "shareLink": "xsc-RTZELi",
+      "createdAt": "2026-10-12T02:56:48.844Z"
+    },
+    {
+      "id": "H5KhafCZWn46Rt",
+      "userId": "aCCSUl6gE_jLP2",
+      "name": "Business A",
+      "type": "Restaurante",
+      "description": "Business A",
+      "shareLink": "0WhZ_ruIWG",
+      "createdAt": "2026-10-12T03:06:38.864Z"
+    },
+    {
+      "id": "IhiXaZW8tVm6I3",
+      "userId": "xsb376VE9G-bmQ",
+      "name": "Business B",
+      "type": "Tienda",
+      "description": "Business B",
+      "shareLink": "BhIbY-rY8Z",
+      "createdAt": "2026-10-12T03:06:38.953Z"
+    },
+    {
+      "id": "c9CN-3H65SYMBk",
+      "userId": "E8MZqhuvsRwYvZ",
+      "name": "Updated 3",
+      "type": "Test",
+      "description": "Para probar escrituras",
+      "shareLink": "ftVHJICppC",
+      "createdAt": "2026-10-12T03:10:53.452Z"
+    },
+    {
+      "id": "A77enzij_PFy-g",
+      "userId": "2k-TNLd0vkpvtB",
+      "name": "Widget Test Biz",
+      "type": "Test",
+      "description": "Para probar widget",
+      "shareLink": "mdYHRvBthv",
+      "createdAt": "2026-10-12T03:16:04.934Z"
+    },
+    {
+      "id": "K1tP8y3rq_5XT3",
+      "userId": "2k-TNLd0vkpvtB",
+      "name": "Another Business",
+      "type": "Test",
+      "description": "Otro negocio",
+      "shareLink": "Pz8d7b_vsT",
+      "createdAt": "2026-10-12T03:16:06.382Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "MTuVq3BbiTQx5A",
+      "businessId": "we-DHrcGeTOeDU",
+      "author": "Carlos Pérez",
+      "rating": 5,
+      "text": "Excelente servicio. Me atendieron muy bien, fueron profesionales y el precio fue razonable. Recomiendo este negocio.",
+      "platform": "ReputationManager",
+      "createdAt": "2026-10-12T02:44:45.072Z"
+    },
+    {
+      "id": "kgmoE3LzQMeMMO",
+      "businessId": "BRu7vDszkMZU4N",
+      "author": "Test Client Phase1",
+      "rating": 5,
+      "text": "Excelente servicio, el personal muy atento y la comida deliciosa. Recomendado 100%.",
+      "platform": "ReputationManager",
+      "createdAt": "2026-10-12T02:56:49.141Z"
+    },
+    {
+      "id": "Tsow6HLyb1gtpb",
+      "businessId": "BRu7vDszkMZU4N",
+      "author": "Another Client",
+      "rating": 4,
+      "text": "Muy bueno, aunque el servicio fue un poco lento.",
+      "platform": "ReputationManager",
+      "createdAt": "2026-10-12T02:56:50.717Z"
+    },
+    {
+      "id": "PkZgEJPiosjIq7",
+      "businessId": "BRu7vDszkMZU4N",
+      "author": "Cache Test User",
+      "rating": 3,
+      "text": "Prueba de refresco autom�tico del cach�.",
+      "platform": "ReputationManager",
+      "createdAt": "2026-10-12T02:57:06.783Z"
+    },
+    {
+      "id": "ft9lGt_uZE6txR",
+      "businessId": "c9CN-3H65SYMBk",
+      "author": "TestReviewer1",
+      "rating": 5,
+      "text": "Test review 1 content here",
+      "platform": "ReputationManager",
+      "createdAt": "2026-10-12T03:10:55.991Z"
+    },
+    {
+      "id": "odBtrQ4dNOiKHx",
+      "businessId": "c9CN-3H65SYMBk",
+      "author": "TestReviewer2",
+      "rating": 5,
+      "text": "Test review 2 content here",
+      "platform": "ReputationManager",
+      "createdAt": "2026-10-12T03:10:56.033Z"
+    },
+    {
+      "id": "TucJ_eR0YrPtia",
+      "businessId": "c9CN-3H65SYMBk",
+      "author": "TestReviewer3",
+      "rating": 5,
+      "text": "Test review 3 content here",
+      "platform": "ReputationManager",
+      "createdAt": "2026-10-12T03:10:56.081Z"
+    },
+    {
+      "id": "yPcSmfxL46h5IT",
+      "businessId": "A77enzij_PFy-g",
+      "author": "Widget Tester",
+      "rating": 5,
+      "text": "Test review for widget",
+      "platform": "ReputationManager",
+      "createdAt": "2026-10-12T03:16:05.203Z"
+    }
+  ]
+}

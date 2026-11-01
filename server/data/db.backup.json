@@ -1,0 +1,33 @@
+{
+  "users": [
+    {
+      "id": "rO7_TL-69KjIXn",
+      "name": "Yainier Gomez Rivero",
+      "email": "yeinierrivero8@gmail.com",
+      "passwordHash": "$2a$12$3KcJzY.BRpnCVQ4KbtOaR.IdpXgR4fbllSYQEY.Yxttvx.wcDp72.",
+      "createdAt": "2026-10-12T02:34:12.163Z"
+    }
+  ],
+  "businesses": [
+    {
+      "id": "we-DHrcGeTOeDU",
+      "userId": "rO7_TL-69KjIXn",
+      "name": "Auto Repair",
+      "type": "Taller mecánico",
+      "description": "Trabajo de excelencia y precios asequibles",
+      "shareLink": "IIDqUP8K73",
+      "createdAt": "2026-10-12T02:43:08.308Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "MTuVq3BbiTQx5A",
+      "businessId": "we-DHrcGeTOeDU",
+      "author": "Carlos Pérez",
+      "rating": 5,
+      "text": "Excelente servicio. Me atendieron muy bien, fueron profesionales y el precio fue razonable. Recomiendo este negocio.",
+      "platform": "ReputationManager",
+      "createdAt": "2026-10-12T02:44:45.072Z"
+    }
+  ]
+}

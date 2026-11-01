@@ -232,6 +232,11 @@ app.use((req, res, next) => {
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ message: 'ReputationManager API', status: 'online' });
+});
+
 // CSRF Protection middleware (disabled for now - TODO: implement on frontend)
 // const csrfTokens = new Map();
 // app.use((req, res, next) => {

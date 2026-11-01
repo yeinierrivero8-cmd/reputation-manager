@@ -104,7 +104,7 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 
 // Initialize Knex connection to PostgreSQL
 const knexfile = (await import('../knexfile.js')).default;
-const db = knex(knexfile.development);
+const db = knex(knexfile[NODE_ENV]);
 
 if (!JWT_SECRET) {
   if (NODE_ENV === 'production') {

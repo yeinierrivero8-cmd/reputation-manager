@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:17-alpine
+    container_name: reputation_postgres
+    environment:
+      POSTGRES_USER: reputation_prod_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: reputation_manager_prod
+      POSTGRES_INITDB_ARGS: "-c max_connections=100"
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./server/scripts/init-db.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reputation_prod_user -d reputation_manager_prod"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - reputation_network
+    restart: unless-stopped
+
+  # Express Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reputation_backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 5005
+      JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: reputation_prod_user
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: reputation_manager_prod
+      DB_SSL: "false"
+      RATE_LIMIT_LOGIN: 5
+      RATE_LIMIT_SIGNUP: 3
+      RATE_LIMIT_REVIEWS: 3
+      RATE_LIMIT_PUBLIC: 100
+      LOG_LEVEL: info
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./server/logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5005/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - reputation_network
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: reputation_nginx
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx-production.conf:/etc/nginx/conf.d/reputationmanager.conf:ro
+      - ./client/dist:/usr/share/nginx/html:ro
+      - nginx_cache:/var/cache/nginx
+      - ./logs/nginx:/var/log/nginx
+      # For Let's Encrypt (if using certbot inside container)
+      - ./ssl/certbot/conf:/etc/letsencrypt:ro
+      - ./ssl/certbot/www:/var/www/certbot:ro
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - reputation_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  nginx_cache:
+    driver: local
+
+networks:
+  reputation_network:
+    driver: bridge
+
+# Usage:
+# 1. Copy .env.production to .env and set values
+# 2. docker-compose up -d
+# 3. Access https://localhost/ (note: self-signed cert warning)
+# 4. For real SSL, use certbot outside docker or mount real certs

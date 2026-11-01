@@ -1,0 +1,68 @@
+[Unit]
+Description=ReputationManager Backend API
+Documentation=https://github.com/tu-org/reputation-manager
+After=network.target postgresql.service
+Wants=postgresql.service
+
+# Start after PostgreSQL, but don't block system boot if PostgreSQL fails
+PartOf=reputation.target
+
+[Service]
+# Process Management
+Type=simple
+User=nobody
+Group=nogroup
+WorkingDirectory=/opt/reputationmanager/app/server
+
+# Environment
+Environment="NODE_ENV=production"
+Environment="NODE_OPTIONS=--max-old-space-size=512"
+EnvironmentFile=/opt/reputationmanager/app/server/.env
+EnvironmentFile=-/etc/reputation-manager/override.env
+
+# Execution
+ExecStart=/usr/bin/node src/index.js
+ExecReload=/bin/kill -HUP $MAINPID
+
+# Auto-restart on failure
+Restart=on-failure
+RestartSec=10s
+StartLimitInterval=1min
+StartLimitBurst=5
+
+# Resource limits
+CPUAccounting=yes
+MemoryAccounting=yes
+MemoryLimit=512M
+TasksMax=100
+
+# Security hardening
+PrivateTmp=yes
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/opt/reputationmanager/logs
+
+# Logging
+StandardOutput=append:/opt/reputationmanager/logs/backend.log
+StandardError=append:/opt/reputationmanager/logs/backend-error.log
+StandardOutputFileMax=100M
+StandardErrorFileMax=100M
+
+# Timeout (default 90s, increase for slow DB migrations)
+TimeoutStartSec=120
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target
+
+# Installation instructions:
+# 1. Copy this file to: /etc/systemd/system/reputation-backend.service
+# 2. sudo systemctl daemon-reload
+# 3. sudo systemctl enable reputation-backend
+# 4. sudo systemctl start reputation-backend
+#
+# Usage:
+# sudo systemctl status reputation-backend
+# sudo systemctl restart reputation-backend
+# sudo journalctl -u reputation-backend -f

@@ -1,0 +1,92 @@
+═══════════════════════════════════════════════════════════════════════════════
+  CAMBIOS CSS - AMPLIACIÓN DE FORMULARIO LOGIN
+═══════════════════════════════════════════════════════════════════════════════
+
+ARCHIVO: client/src/styles.css
+
+───────────────────────────────────────────────────────────────────────────────
+1. CONTENEDOR PRINCIPAL - .auth-shell-image
+───────────────────────────────────────────────────────────────────────────────
+
+CAMBIO:
+  justify-content: flex-end   →   justify-content: center
+
+EFECTO:
+  ✓ Formulario se centra en el viewport
+  ✓ Coincide con la zona blanca de la imagen
+  ✓ Mejor equilibrio visual
+
+
+───────────────────────────────────────────────────────────────────────────────
+2. CONTENEDOR DEL FORMULARIO - .auth-overlay-form
+───────────────────────────────────────────────────────────────────────────────
+
+CAMBIOS:
+
+  max-width: 360px  →  max-width: 450px
+  ✓ +90px más ancho (+25%)
+  ✓ De ~20% a ~50% del espacio disponible
+
+  width: 100%  →  width: calc(100% - 60px)
+  ✓ Respeta los márgenes del viewport
+  ✓ No llena completamente en escritorio
+
+  padding: 40px 60px  →  padding: 40px 40px
+  ✓ Padding simétrico (igual arriba/abajo, igual izquierda/derecha)
+  ✓ Mejor equilibrio visual
+
+  margin: 0 30px 0 auto  →  margin: 0
+  ✓ Sin margen especial
+  ✓ Flexbox lo centra automáticamente
+
+
+───────────────────────────────────────────────────────────────────────────────
+3. MEDIA QUERIES
+───────────────────────────────────────────────────────────────────────────────
+
+DESKTOP (≤1200px):
+  max-width: 450px
+  width: calc(100% - 60px)
+  padding: 40px 30px
+
+TABLET (≤900px):
+  max-width: 100%
+  width: calc(100% - 60px)
+  padding: 40px 30px
+
+MOBILE (≤600px):
+  max-width: 100%
+  width: calc(100% - 30px)
+  padding: 30px 15px
+
+
+───────────────────────────────────────────────────────────────────────────────
+RESULTADO CUANTITATIVO
+───────────────────────────────────────────────────────────────────────────────
+
+Resolución     |  Antes  |  Después  | Cambio
+───────────────┼─────────┼──────────┼──────────
+1920x1080      |  360px  |  450px   | +90px (+25%)
+1440x900       |  360px  |  450px   | +90px (+25%)
+1024x768       |  944px  |  944px   | Sin cambio (responsive)
+390x844        |  330px  |  330px   | Sin cambio (responsive)
+
+
+───────────────────────────────────────────────────────────────────────────────
+IMPACTO VISUAL
+───────────────────────────────────────────────────────────────────────────────
+
+✅ ANTES:
+   - Formulario muy pequeño en zona blanca
+   - Campos estrechos
+   - Botones comprimidos
+   - Aspecto perdido en la pantalla
+
+✅ DESPUÉS:
+   - Formulario cómodo y proporcionado
+   - Campos con espacio respirable
+   - Botones claramente visibles
+   - Aspecto profesional y premium
+
+
+═══════════════════════════════════════════════════════════════════════════════

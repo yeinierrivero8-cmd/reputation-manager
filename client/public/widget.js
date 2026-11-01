@@ -7,7 +7,7 @@
 (function() {
   'use strict';
 
-  const API_BASE = window.RM_API_BASE || 'http://localhost:5005/api';
+  const API_BASE = window.RM_API_BASE || 'https://reputation-manager-production-6dde.up.railway.app/api';
   const WIDGET_VERSION = '1.0.0';
 
   class ReputationManagerWidget {

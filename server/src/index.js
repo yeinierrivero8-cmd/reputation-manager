@@ -260,6 +260,20 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.get('/debug/env', (req, res) => {
+  res.json({
+    NODE_ENV,
+    PORT,
+    DB_HOST_SET: !!process.env.DB_HOST,
+    DB_PORT_SET: !!process.env.DB_PORT,
+    DB_USER_SET: !!process.env.DB_USER,
+    DB_PASSWORD_SET: !!process.env.DB_PASSWORD,
+    DB_NAME: process.env.DB_NAME || 'railway',
+    CORS_ORIGIN,
+    JWT_SECRET_SET: !!JWT_SECRET
+  });
+});
+
 // CSRF Protection middleware (disabled for now - TODO: implement on frontend)
 // const csrfTokens = new Map();
 // app.use((req, res, next) => {

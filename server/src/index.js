@@ -98,8 +98,8 @@ function getGenericAuthError() {
 }
 
 const PORT = process.env.PORT || 5000;
-// Detect environment: Railway sets RAILWAY_ENVIRONMENT, otherwise check NODE_ENV, default to development
-const NODE_ENV = process.env.NODE_ENV || (process.env.RAILWAY_ENVIRONMENT ? 'production' : 'development');
+// In production (Railway), use production config by default
+const NODE_ENV = process.env.NODE_ENV || 'production';
 const JWT_SECRET = process.env.JWT_SECRET;
 const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 

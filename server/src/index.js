@@ -610,11 +610,13 @@ app.post('/api/auth/login', async (req, res) => {
 // DEBUG endpoints
 app.get('/api/debug/config', (req, res) => {
   res.json({
-    NODE_ENV,
-    DB_HOST: process.env.DB_HOST,
-    isRailway: process.env.DB_HOST?.includes('railway'),
-    dbConfigHost: dbConfig?.connection?.host,
-    dbConfigPort: dbConfig?.connection?.port
+    NODE_ENV: process.env.NODE_ENV || 'NOT SET',
+    DB_HOST: process.env.DB_HOST || 'NOT SET',
+    DB_PORT: process.env.DB_PORT || 'NOT SET',
+    DB_USER: process.env.DB_USER || 'NOT SET',
+    DB_NAME: process.env.DB_NAME || 'NOT SET',
+    JWT_SECRET: process.env.JWT_SECRET ? '***SET***' : 'NOT SET',
+    PORT: process.env.PORT || 'NOT SET'
   });
 });
 

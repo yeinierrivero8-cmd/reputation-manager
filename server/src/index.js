@@ -105,7 +105,9 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 
 // Initialize Knex connection to PostgreSQL
 const knexfile = (await import('../knexfile.js')).default;
-const db = knex(knexfile[NODE_ENV]);
+// Use production config if DB_HOST is set to Railway, otherwise use NODE_ENV
+const dbConfig = process.env.DB_HOST?.includes('railway') ? knexfile.production : knexfile[NODE_ENV];
+const db = knex(dbConfig);
 
 if (!JWT_SECRET) {
   if (NODE_ENV === 'production') {

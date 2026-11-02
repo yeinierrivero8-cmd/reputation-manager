@@ -103,25 +103,18 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const CORS_ORIGIN = '*';
 
 // Initialize Knex connection with Railway credentials
-let db;
-try {
-  db = knex({
-    client: 'pg',
-    connection: {
-      host: process.env.DB_HOST || 'postgres.railway.internal',
-      port: parseInt(process.env.DB_PORT || '5432'),
-      user: process.env.DB_USER || 'postgres',
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME || 'railway',
-      ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
-    },
-    pool: { min: 1, max: 10 }
-  });
-  console.log('✅ Database connected');
-} catch (e) {
-  console.error('❌ Database connection error:', e.message);
-  process.exit(1);
-}
+const db = knex({
+  client: 'pg',
+  connection: {
+    host: process.env.DB_HOST || 'postgres.railway.internal',
+    port: parseInt(process.env.DB_PORT || '5432'),
+    user: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME || 'railway',
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
+  },
+  pool: { min: 1, max: 10 }
+});
 
 if (!JWT_SECRET) {
   if (NODE_ENV === 'production') {

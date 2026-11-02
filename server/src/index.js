@@ -118,39 +118,50 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 const JWT_SECRET = process.env.JWT_SECRET || '9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a';
 const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 
-// DEBUG: Log all vars at startup
+// DEBUG: Log configuration at startup
 console.error('[STARTUP] === ENVIRONMENT CONFIGURATION ===');
 console.error(`[STARTUP] NODE_ENV: ${NODE_ENV}`);
 console.error(`[STARTUP] PORT: ${PORT}`);
+console.error(`[STARTUP] DATABASE_URL: ${process.env.DATABASE_URL ? '***SET***' : 'NOT SET'}`);
 console.error(`[STARTUP] DB_HOST: ${process.env.DB_HOST || 'NOT SET'}`);
-console.error(`[STARTUP] DB_PORT: ${process.env.DB_PORT || 'NOT SET'}`);
-console.error(`[STARTUP] DB_USER: ${process.env.DB_USER || 'NOT SET'}`);
-console.error(`[STARTUP] DB_PASSWORD: ${process.env.DB_PASSWORD ? '***SET***' : 'NOT SET'}`);
-console.error(`[STARTUP] DB_NAME: ${process.env.DB_NAME || 'NOT SET'}`);
-console.error(`[STARTUP] DB_SSL: ${process.env.DB_SSL || 'default(true)'}`);
 console.error(`[STARTUP] JWT_SECRET: ${process.env.JWT_SECRET ? '***SET***' : 'NOT SET (using default)'}`);
-console.error(`[STARTUP] CORS_ORIGIN: ${CORS_ORIGIN}`);
 console.error('[STARTUP] ===================================');
 
-// Initialize Knex connection with Railway credentials
-const db = knex({
-  client: 'pg',
-  connection: {
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432'),
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || 'postgres',
-    database: process.env.DB_NAME || 'railway',
-    ssl: process.env.DB_SSL !== 'false' ? { rejectUnauthorized: false } : false
-  },
-  pool: { min: 1, max: 10 }
-});
+// Initialize Knex connection
+// Priority: DATABASE_URL (from Railway) > individual DB vars > defaults
+let dbConfig;
+if (process.env.DATABASE_URL) {
+  // Parse DATABASE_URL (PostgreSQL format: postgresql://user:password@host:port/database)
+  dbConfig = {
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+    pool: { min: 1, max: 10 }
+  };
+  console.error('[STARTUP] Using DATABASE_URL for connection');
+} else {
+  // Fallback to individual env vars
+  dbConfig = {
+    client: 'pg',
+    connection: {
+      host: process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DB_PORT || '5432'),
+      user: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || 'postgres',
+      database: process.env.DB_NAME || 'railway',
+      ssl: process.env.DB_SSL !== 'false' ? { rejectUnauthorized: false } : false
+    },
+    pool: { min: 1, max: 10 }
+  };
+  console.error('[STARTUP] Using individual DB vars for connection');
+}
 
-// Test DB connection at startup (don't crash if it fails)
+const db = knex(dbConfig);
+
+// Test DB connection at startup
 let dbConnected = false;
 db.raw('SELECT 1')
   .then(() => {
-    console.error('[STARTUP] Database connection: OK');
+    console.error('[STARTUP] Database connection: OK ✓');
     dbConnected = true;
   })
   .catch(err => console.error('[STARTUP] Database connection FAILED:', err.message));

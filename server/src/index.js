@@ -98,8 +98,8 @@ function getGenericAuthError() {
 }
 
 const PORT = process.env.PORT || 5000;
-// If DB_HOST is remote (Railway), assume production environment
-const NODE_ENV = process.env.NODE_ENV || (process.env.DB_HOST && process.env.DB_HOST.includes('railway') ? 'production' : 'development');
+// Default to production if DB_HOST is set and not localhost
+const NODE_ENV = process.env.NODE_ENV || (process.env.DB_HOST && !process.env.DB_HOST.includes('localhost') ? 'production' : 'development');
 const JWT_SECRET = process.env.JWT_SECRET;
 const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 

@@ -107,7 +107,24 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 // Initialize Knex connection to PostgreSQL
 const knexfile = (await import('../knexfile.js')).default;
 console.log('🔍 Environment:', { NODE_ENV });
-const db = knex(knexfile[NODE_ENV]);
+
+// In production, ensure we use the correct config with Railway credentials
+let dbConfig = knexfile[NODE_ENV];
+if (NODE_ENV === 'production' && !process.env.DB_HOST) {
+  // Fallback: use hardcoded Railway connection if env vars not set
+  dbConfig = {
+    client: 'pg',
+    connection: {
+      host: 'postgres.railway.internal',
+      port: 5432,
+      user: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME || 'railway',
+      ssl: { rejectUnauthorized: false }
+    }
+  };
+}
+const db = knex(dbConfig);
 
 if (!JWT_SECRET) {
   if (NODE_ENV === 'production') {

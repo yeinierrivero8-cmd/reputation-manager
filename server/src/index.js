@@ -550,7 +550,17 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-// DEBUG endpoint
+// DEBUG endpoints
+app.get('/api/debug/config', (req, res) => {
+  res.json({
+    NODE_ENV,
+    DB_HOST: process.env.DB_HOST,
+    isRailway: process.env.DB_HOST?.includes('railway'),
+    dbConfigHost: dbConfig?.connection?.host,
+    dbConfigPort: dbConfig?.connection?.port
+  });
+});
+
 app.get('/api/debug/user/:email', async (req, res) => {
   try {
     const user = await db('users').where('email', req.params.email).first();

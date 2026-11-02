@@ -244,7 +244,11 @@ app.use(cookieParser());
 
 // Root endpoint
 app.get('/', (req, res) => {
-  res.json({ message: 'ReputationManager API', status: 'online' });
+  res.json({ message: 'ReputationManager API', status: 'online', env: NODE_ENV });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
 });
 
 // CSRF Protection middleware (disabled for now - TODO: implement on frontend)

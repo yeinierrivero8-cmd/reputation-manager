@@ -147,9 +147,13 @@ const db = knex({
   pool: { min: 1, max: 10 }
 });
 
-// Test DB connection at startup
+// Test DB connection at startup (don't crash if it fails)
+let dbConnected = false;
 db.raw('SELECT 1')
-  .then(() => console.error('[STARTUP] Database connection: OK'))
+  .then(() => {
+    console.error('[STARTUP] Database connection: OK');
+    dbConnected = true;
+  })
   .catch(err => console.error('[STARTUP] Database connection FAILED:', err.message));
 
 if (!JWT_SECRET) {
@@ -2076,6 +2080,10 @@ app.get('/api/search', publicLimiter, async (req, res) => {
 
 app.use((err, _req, res, _next) => { logger.error('Unhandled error', { error: err.message, stack: err.stack }); res.status(500).json({ message: 'Ocurrió un error inesperado.' }); });
 app.listen(PORT, () => {
+  console.error(`[STARTUP] ✓ Server listening on port ${PORT}`);
+  console.error(`[STARTUP] Environment: ${NODE_ENV}`);
+  console.error(`[STARTUP] Database: ${process.env.DB_HOST}:${process.env.DB_PORT}`);
+  console.error(`[STARTUP] DB Connected: ${dbConnected}`);
   logger.info(`ReputationManager API started on http://localhost:${PORT}`, {
     environment: NODE_ENV,
     storage: `PostgreSQL (${process.env.DB_HOST}:${process.env.DB_PORT})`,

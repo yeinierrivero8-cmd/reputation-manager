@@ -1,7 +1,20 @@
-import 'dotenv/config';
 import dotenv from 'dotenv';
-// Override with .env.production if it exists (Railway doesn't inject env vars)
-dotenv.config({ path: '.env.production', override: true });
+import fs from 'fs';
+import path from 'path';
+
+// Load .env.production for production, or .env for development
+// In production (Railway), .env.production must exist in WORKDIR
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env';
+const result = dotenv.config({ path: envFile, override: true });
+
+// Debug: Log environment loading status
+if (process.env.NODE_ENV === 'production') {
+  const envPath = path.resolve(envFile);
+  const envExists = fs.existsSync(envPath);
+  console.log(`[dotenv] Loading from: ${envPath}`);
+  console.log(`[dotenv] File exists: ${envExists}`);
+  console.log(`[dotenv] Parsed: ${result.parsed ? Object.keys(result.parsed).length + ' vars' : 'none'}`);
+}
 
 import express from 'express';
 import cors from 'cors';
@@ -102,9 +115,9 @@ function getGenericAuthError() {
 }
 
 const PORT = process.env.PORT || 5000;
-const NODE_ENV = 'production';
+const NODE_ENV = process.env.NODE_ENV || 'development';
 const JWT_SECRET = process.env.JWT_SECRET || '9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a';
-const CORS_ORIGIN = '*';
+const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 
 // Initialize Knex connection with Railway credentials
 // Note: Railway env vars not passed via dotenv, hardcode production values

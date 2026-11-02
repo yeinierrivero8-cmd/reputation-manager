@@ -24,7 +24,6 @@ import jwt from 'jsonwebtoken';
 import { nanoid } from 'nanoid';
 import knex from 'knex';
 import { fileURLToPath } from 'node:url';
-import path from 'node:path';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import Stripe from 'stripe';

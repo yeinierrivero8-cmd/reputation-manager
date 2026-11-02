@@ -99,7 +99,7 @@ function getGenericAuthError() {
 
 const PORT = process.env.PORT || 5000;
 const NODE_ENV = 'production';
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || '9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a';
 const CORS_ORIGIN = '*';
 
 // Initialize Knex connection with Railway credentials

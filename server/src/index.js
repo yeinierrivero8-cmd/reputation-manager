@@ -103,6 +103,15 @@ const JWT_SECRET = process.env.JWT_SECRET || '9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b
 const CORS_ORIGIN = '*';
 
 // Initialize Knex connection with Railway credentials
+console.log('🔍 DB Connection Debug:', {
+  DB_HOST: process.env.DB_HOST ? '***set***' : '***NOT SET***',
+  DB_PORT: process.env.DB_PORT ? '***set***' : '***NOT SET***',
+  DB_USER: process.env.DB_USER ? '***set***' : '***NOT SET***',
+  DB_PASSWORD: process.env.DB_PASSWORD ? '***set***' : '***NOT SET***',
+  DB_NAME: process.env.DB_NAME || 'railway',
+  DB_SSL: process.env.DB_SSL
+});
+
 const db = knex({
   client: 'pg',
   connection: {

@@ -119,8 +119,21 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 const JWT_SECRET = process.env.JWT_SECRET || '9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a';
 const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 
+// DEBUG: Log all vars at startup
+console.error('[STARTUP] === ENVIRONMENT CONFIGURATION ===');
+console.error(`[STARTUP] NODE_ENV: ${NODE_ENV}`);
+console.error(`[STARTUP] PORT: ${PORT}`);
+console.error(`[STARTUP] DB_HOST: ${process.env.DB_HOST || 'NOT SET'}`);
+console.error(`[STARTUP] DB_PORT: ${process.env.DB_PORT || 'NOT SET'}`);
+console.error(`[STARTUP] DB_USER: ${process.env.DB_USER || 'NOT SET'}`);
+console.error(`[STARTUP] DB_PASSWORD: ${process.env.DB_PASSWORD ? '***SET***' : 'NOT SET'}`);
+console.error(`[STARTUP] DB_NAME: ${process.env.DB_NAME || 'NOT SET'}`);
+console.error(`[STARTUP] DB_SSL: ${process.env.DB_SSL || 'default(true)'}`);
+console.error(`[STARTUP] JWT_SECRET: ${process.env.JWT_SECRET ? '***SET***' : 'NOT SET (using default)'}`);
+console.error(`[STARTUP] CORS_ORIGIN: ${CORS_ORIGIN}`);
+console.error('[STARTUP] ===================================');
+
 // Initialize Knex connection with Railway credentials
-// Note: Railway env vars not passed via dotenv, hardcode production values
 const db = knex({
   client: 'pg',
   connection: {
@@ -133,6 +146,11 @@ const db = knex({
   },
   pool: { min: 1, max: 10 }
 });
+
+// Test DB connection at startup
+db.raw('SELECT 1')
+  .then(() => console.error('[STARTUP] Database connection: OK'))
+  .catch(err => console.error('[STARTUP] Database connection FAILED:', err.message));
 
 if (!JWT_SECRET) {
   if (NODE_ENV === 'production') {

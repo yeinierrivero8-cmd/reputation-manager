@@ -535,10 +535,21 @@ app.post('/api/auth/login', async (req, res) => {
 
     res.json({ user: safeUser(user) });
   } catch (e) {
-    logger.error('Login error', { error: e.message });
-    res.status(500).json({ message: 'No se pudo iniciar sesión.' });
+    logger.error('Login error', { error: e.message, stack: e.stack });
+    res.status(500).json({ message: 'No se pudo iniciar sesión.', debug: e.message });
   }
 });
+
+// DEBUG endpoint
+app.get('/api/debug/user/:email', async (req, res) => {
+  try {
+    const user = await db('users').where('email', req.params.email).first();
+    res.json({ exists: !!user, user: user ? { id: user.id, email: user.email, role: user.role, hasPasswordHash: !!user.passwordHash } : null });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.get('/api/auth/me', auth, async (req, res) => {
   try {
     const user = await db('users').where('id', req.user.id).first();

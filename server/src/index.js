@@ -101,6 +101,7 @@ const PORT = process.env.PORT || 5000;
 // In production (Railway), use production config by default
 const NODE_ENV = process.env.NODE_ENV || 'production';
 const JWT_SECRET = process.env.JWT_SECRET;
+// CORS: allow all origins in production (Railway doesn't pass env vars via files)
 const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 
 // Initialize Knex connection to PostgreSQL
